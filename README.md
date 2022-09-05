@@ -68,4 +68,6 @@
 											}
 										}
 									```
+					- Add the NETCore.MailKit library to the EmailService project
+						- Install-Package NETCore.MailKit -Version 2.1.0
 
