@@ -7,5 +7,10 @@
 				- HTML for the message body
 				- Asynchronous way to send an email
 				- Adding attachments to an email
-			
+					
+				- Add new ASP.NET Core Web API project
+					- Solution name: EmailApp
+					- Project name: EmailApp
+					- .NET 6.0
+					
 
