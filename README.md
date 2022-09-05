@@ -3,10 +3,11 @@
 	- .NET 6.0
 		- code-maze: How to Send an Email in ASP.NET Core
 			- https://code-maze.com/aspnetcore-send-email/
-				- Synchronous way to send an email/
-				- HTML for the message body
-				- Asynchronous way to send an email
-				- Adding attachments to an email
+				- Content:
+					- Synchronous way to send an email/
+					- HTML for the message body
+					- Asynchronous way to send an email
+					- Adding attachments to an email
 					
 				- Add new ASP.NET Core Web API project
 					- Solution name: EmailApp
@@ -18,5 +19,18 @@
 					- .NET 6.0
 					
 				- Add a reference to the new class library.
+				- Inside EmailService class library
+					- Create at root level a new class with name EmailConfiguration.cs 
+					
+								```cs
+									public class EmailConfiguration
+									{
+										public string From { get; set; } = String.Empty;
+										public string SmtpServer { get; set; } = String.Empty;
+										public int Port { get; set; }
+										public string UserName { get; set; } = String.Empty;
+										public string Password { get; set; } = String.Empty;
+									}
+								```
 					
 
