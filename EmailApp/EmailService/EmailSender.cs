@@ -21,6 +21,12 @@ namespace EmailService
             Send(emailMessage);
         }
 
+        public void SendHtmlEmail(Message message)
+        {
+            var emailMessage = CreateHtmlEmailMessage(message);
+            Send(emailMessage);
+        }
+
         private MimeMessage CreateEmailMessage(Message message)
         {
             var emailMessage = new MimeMessage();
@@ -29,6 +35,16 @@ namespace EmailService
             emailMessage.Subject = message.Subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
 
+            return emailMessage;
+        }
+
+        private MimeMessage CreateHtmlEmailMessage(Message message)
+        {
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress(_emailConfig.FromName, _emailConfig.From));
+            emailMessage.To.AddRange(message.To);
+            emailMessage.Subject = message.Subject;
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = string.Format("<h2 style='color:red;'>{0}</h2>", message.Content) };
             return emailMessage;
         }
 
