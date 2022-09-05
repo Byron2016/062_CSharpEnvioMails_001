@@ -8,6 +8,7 @@ namespace EmailService
 {
     public class EmailConfiguration
     {
+        public string FromName { get; set; } = String.Empty;
         public string From { get; set; } = String.Empty;
         public string SmtpServer { get; set; } = String.Empty;
         public int Port { get; set; }
