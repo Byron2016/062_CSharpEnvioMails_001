@@ -32,5 +32,17 @@
 										public string Password { get; set; } = String.Empty;
 									}
 								```
+								
+					- Populate EmailConfiguration class' properties with values from appsettings.json. 
+						
+									```cs
+										"EmailConfiguration": {
+											"From": "codemazetest@gmail.com",
+											"SmtpServer": "smtp.gmail.com",
+											"Port": 465,
+											"Username": "codemazetest@gmail.com",
+											"Password": "our test password"
+										},
+									```
 					
 
