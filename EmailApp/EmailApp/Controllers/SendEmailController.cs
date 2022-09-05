@@ -46,7 +46,7 @@ namespace EmailApp.Controllers
 
             var message = new MessageWithFiles(new string[] { "codemazetest@mailinator.com" }, "Test mail with Attachments", "This is the content from our mail with attachments.", files);
 
-            await _emailSender.SendEmailAsync(message);
+            await _emailSender.SendEmailWithAttachnents(MessageWithFiles);
 
             return Ok();
         }
