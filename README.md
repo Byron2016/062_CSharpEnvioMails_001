@@ -22,76 +22,108 @@
 				- Inside EmailService class library
 					- Create at root level a new class with name EmailConfiguration.cs 
 					
-								```cs
-									public class EmailConfiguration
-									{
-										public string From { get; set; } = String.Empty;
-										public string SmtpServer { get; set; } = String.Empty;
-										public int Port { get; set; }
-										public string UserName { get; set; } = String.Empty;
-										public string Password { get; set; } = String.Empty;
-									}
-								```
+						```cs
+							public class EmailConfiguration
+							{
+								public string From { get; set; } = String.Empty;
+								public string SmtpServer { get; set; } = String.Empty;
+								public int Port { get; set; }
+								public string UserName { get; set; } = String.Empty;
+								public string Password { get; set; } = String.Empty;
+							}
+						```
 								
 					- Populate EmailConfiguration class' properties with values from appsettings.json. 
 						
-									```cs
-										"EmailConfiguration": {
-											"From": "codemazetest@gmail.com",
-											"SmtpServer": "smtp.gmail.com",
-											"Port": 465,
-											"Username": "codemazetest@gmail.com",
-											"Password": "our test password"
-										},
-									```
+						```cs
+							"EmailConfiguration": {
+								"From": "codemazetest@gmail.com",
+								"SmtpServer": "smtp.gmail.com",
+								"Port": 465,
+								"Username": "codemazetest@gmail.com",
+								"Password": "our test password"
+							},
+						```
 									
 					- Recover values from appsettings.json file and them like a service.
 
-									```cs
-										using EmailService;
-										namespace EmailApp
-										{
-											public class Program
-											{
-												public static void Main(string[] args)
-												{
-													var builder = WebApplication.CreateBuilder(args);
-										
-													//Recover data from appsettings.json
-													var emailConfig  = builder.Configuration
-														.GetSection("EmailConfiguration")
-														.Get<EmailConfiguration>();
-													....
-													// Add services.
-													builder.Services.AddSingleton(emailConfig );
-												}
-											}
-										}
-									```
+						```cs
+							using EmailService;
+							namespace EmailApp
+							{
+								public class Program
+								{
+									public static void Main(string[] args)
+									{
+										var builder = WebApplication.CreateBuilder(args);
+							
+										//Recover data from appsettings.json
+										var emailConfig  = builder.Configuration
+											.GetSection("EmailConfiguration")
+											.Get<EmailConfiguration>();
+										....
+										// Add services.
+										builder.Services.AddSingleton(emailConfig );
+									}
+								}
+							}
+						```
+							
 					- Add the NETCore.MailKit library to the EmailService project
 						- Install-Package NETCore.MailKit -Version 2.1.0
 						
 					- Send a Test Email
 						- Create a Message class
 							- This class set the data related to our email recipients, subject, and content
-									```cs
-										namespace EmailService
+								```cs
+									namespace EmailService
+									{
+										public class Message
 										{
-											public class Message
+											//properties
+											public List<MailboxAddress> To { get; set; }
+											public string Subject { get; set; }
+											public string Content { get; set; }
+									
+											//constructor
+											public Message(IEnumerable<string> to, string subject, string content)
 											{
-												//properties
-												public List<MailboxAddress> To { get; set; }
-												public string Subject { get; set; }
-												public string Content { get; set; }
-										
-												//constructor
-												public Message(IEnumerable<string> to, string subject, string content)
-												{
-													To = new List<MailboxAddress>();
-													To.AddRange(to.Select(x => new MailboxAddress("",x)));
-													Subject = subject;
-													Content = content;
-												}
+												To = new List<MailboxAddress>();
+												To.AddRange(to.Select(x => new MailboxAddress("",x)));
+												Subject = subject;
+												Content = content;
 											}
 										}
-									```
+									}
+								```
+									
+					- Create a Interfase and implement it
+					
+						```cs
+							namespace EmailService
+							{
+								public interface IEmailSender
+								{
+									void SendEmail(Message message);
+								}
+							}
+						```
+									
+						```cs
+							namespace EmailService
+							{
+								public class EmailSender : IEmailSender
+								{
+									private readonly EmailConfiguration _emailConfig;
+									public EmailSender(EmailConfiguration emailConfig)
+									{
+										_emailConfig = emailConfig;
+									}
+									public void SendEmail(Message message)
+									{
+										var emailMessage = CreateEmailMessage(message);
+										Send(emailMessage);
+									}
+								}
+							}
+						```
