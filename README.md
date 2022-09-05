@@ -17,4 +17,6 @@
 					- Name: EmailService
 					- .NET 6.0
 					
+				- Add a reference to the new class library.
+					
 
