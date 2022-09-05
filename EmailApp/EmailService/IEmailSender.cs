@@ -10,5 +10,7 @@ namespace EmailService
     {
         void SendEmail(Message message);
         void SendHtmlEmail(Message message);
+
+        Task SendEmailAsync(Message message);
     }
 }

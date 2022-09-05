@@ -24,5 +24,19 @@ namespace EmailApp.Controllers
 
             return Ok();
         }
+
+        //[HttpGet(Name = "AsyncEmailSent")]
+        //public async Task<IActionResult> Sent(int i =  0)
+        //{
+        //    var message = new Message(new string[] { "codemazetest@mailinator.com", "xgvqvsdo@sharklasers.com", "testaspcore@dispostable.com" }, "1-Test async email", "1-This is the content from our async email.");
+        //    await _emailSender.SendEmailAsync(message);
+        //    Console.WriteLine($"dentro de SentAsyncEmail");
+        //    //for (var i = 0; i < 10000; i++)
+        //    //{
+        //    //    Console.WriteLine($"dentro de SentAsyncEmail-{i}");
+        //    //}
+
+        //    return Ok();
+        //}
     }
 }

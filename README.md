@@ -232,3 +232,56 @@
 								return emailMessage;
 							}
 						```
+						
+				- Sending an Email in ASP.NET Core Asynchronously
+					- Add a new method to interfase IEmailSender
+						```cs
+							Task SendEmailAsync(Message message);
+						```
+					- Implement interfase IEmailSender
+						```cs
+							public async Task SendEmailAsync(Message message)
+							{
+								var mailMessage = CreateEmailMessage(message);
+								await SendAsync(mailMessage);
+							}
+						```
+						
+					- Add SendAsync method
+						```cs
+							private async Task SendAsync(MimeMessage mailMessage)
+							{
+								using (var client = new SmtpClient())
+								{
+									try
+									{
+										await client.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, true);
+										client.AuthenticationMechanisms.Remove("XOAUTH2");
+										await client.AuthenticateAsync(_emailConfig.UserName, _emailConfig.Password);
+										await client.SendAsync(mailMessage);
+									}
+									catch
+									{
+										//log an error message or throw an exception, or both.
+										throw;
+									}
+									finally
+									{
+										await client.DisconnectAsync(true);
+										client.Dispose();
+									}
+								}
+							}
+						```
+						
+					- Add Method to controller
+						```cs
+							[HttpGet(Name = "SentAsyncEmail")]
+							public async Task<IActionResult> SentAsync()
+							{
+								var message = new Message(new string[] { "codemazetest@mailinator.com", "xgvqvsdo@sharklasers.com", "testaspcore@dispostable.com" }, "1-Test async email", "1-This is the content from our async email.");
+								await _emailSender.SendEmailAsync(message);
+					
+								return Ok();
+							}
+						```
