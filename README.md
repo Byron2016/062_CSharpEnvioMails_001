@@ -44,5 +44,28 @@
 											"Password": "our test password"
 										},
 									```
-					
+									
+					- Recover values from appsettings.json file and them like a service.
+
+									```cs
+										using EmailService;
+										namespace EmailApp
+										{
+											public class Program
+											{
+												public static void Main(string[] args)
+												{
+													var builder = WebApplication.CreateBuilder(args);
+										
+													//Recover data from appsettings.json
+													var emailConfig  = builder.Configuration
+														.GetSection("EmailConfiguration")
+														.Get<EmailConfiguration>();
+													....
+													// Add services.
+													builder.Services.AddSingleton(emailConfig );
+												}
+											}
+										}
+									```
 

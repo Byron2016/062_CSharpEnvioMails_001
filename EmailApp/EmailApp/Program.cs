@@ -1,3 +1,5 @@
+using EmailService;
+
 namespace EmailApp
 {
     public class Program
@@ -6,7 +8,13 @@ namespace EmailApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //Recover data from appsettings.json
+            var emailConfig = builder.Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+
             // Add services to the container.
+            builder.Services.AddSingleton(emailConfig);
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
