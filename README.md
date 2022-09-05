@@ -70,4 +70,28 @@
 									```
 					- Add the NETCore.MailKit library to the EmailService project
 						- Install-Package NETCore.MailKit -Version 2.1.0
-
+						
+					- Send a Test Email
+						- Create a Message class
+							- This class set the data related to our email recipients, subject, and content
+									```cs
+										namespace EmailService
+										{
+											public class Message
+											{
+												//properties
+												public List<MailboxAddress> To { get; set; }
+												public string Subject { get; set; }
+												public string Content { get; set; }
+										
+												//constructor
+												public Message(IEnumerable<string> to, string subject, string content)
+												{
+													To = new List<MailboxAddress>();
+													To.AddRange(to.Select(x => new MailboxAddress("",x)));
+													Subject = subject;
+													Content = content;
+												}
+											}
+										}
+									```
