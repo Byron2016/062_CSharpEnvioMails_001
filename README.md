@@ -13,4 +13,8 @@
 					- Project name: EmailApp
 					- .NET 6.0
 					
+				- New Class Library (.NET Core) (A project for creating a class library that targets .NET or .NET standard)
+					- Name: EmailService
+					- .NET 6.0
+					
 
