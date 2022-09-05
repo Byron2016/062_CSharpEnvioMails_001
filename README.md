@@ -285,3 +285,19 @@
 								return Ok();
 							}
 						```
+						
+				- Adding File Attachments
+					- Add a new POST action to our controller
+						```cs
+							[HttpPost]
+							public async Task<IActionResult> Post()
+							{
+								var files = Request.Form.Files.Any() ? Request.Form.Files : new FormFileCollection();
+					
+								var message = new MessageWithFiles(new string[] { "codemazetest@mailinator.com" }, "Test mail with Attachments", "This is the content from our mail with attachments.", files);
+					
+								await _emailSender.SendEmailAsync(message);
+					
+								return Ok();
+							}
+						```
