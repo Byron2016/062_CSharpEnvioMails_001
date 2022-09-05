@@ -397,3 +397,8 @@
 								}
 							}
 						```
+						
+					- Test con Postman
+						- Seleccionar el método Post method
+						- Seleccionar Body
+							- Form Type seleccionar File

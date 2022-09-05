@@ -33,6 +33,12 @@ namespace EmailService
             await SendAsync(mailMessage);
         }
 
+        public async Task SendEmailWithAttachnents(MessageWithFiles message)
+        {
+            var emailMessage = CreateEmailMessageWithAttachments(message);
+            await SendAsync(emailMessage);
+        }
+
         private MimeMessage CreateEmailMessage(Message message)
         {
             var emailMessage = new MimeMessage();
