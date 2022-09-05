@@ -166,3 +166,26 @@
 								}
 							}
 						```
+						
+				- Inside EmailApp project
+					- Register this service in the Startup.cs class
+					
+						```cs
+							namespace EmailApp
+							{
+								public class Program
+								{
+									public static void Main(string[] args)
+									{
+										....
+							
+										// Add services to the container.
+										builder.Services.AddSingleton(emailConfig);
+							
+										//Register the EmailService
+										builder.Services.AddScoped<IEmailSender, EmailSender>();
+							
+										....
+								}
+							}
+						```

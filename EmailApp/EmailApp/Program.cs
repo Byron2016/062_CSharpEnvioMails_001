@@ -16,6 +16,9 @@ namespace EmailApp
             // Add services to the container.
             builder.Services.AddSingleton(emailConfig);
 
+            //Register the EmailService
+            builder.Services.AddScoped<IEmailSender, EmailSender>();
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
