@@ -369,3 +369,31 @@
 								}
 							}
 						```
+						
+					- add the FormOptions configuration to the ConfigureServices method
+						```cs
+							using EmailService;
+							using Microsoft.AspNetCore.Http.Features;
+							namespace EmailApp
+							{
+								public class Program
+								{
+									public static void Main(string[] args)
+									{
+										...
+							
+										//Register the EmailService
+										builder.Services.AddScoped<IEmailSender, EmailSender>();
+							
+										//Add Configure options
+										builder.Services.Configure<FormOptions>(o => {
+											o.ValueLengthLimit = int.MaxValue;
+											o.MultipartBodyLengthLimit = int.MaxValue;
+											o.MemoryBufferThreshold = int.MaxValue;
+										});
+							
+										....
+									}
+								}
+							}
+						```
